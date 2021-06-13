@@ -2,6 +2,8 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using System.Threading;
+using OpenQA.Selenium.Remote;
+using System;
 
 namespace IntTests
 {
@@ -13,13 +15,18 @@ namespace IntTests
         [SetUp]
         public void Setup()
         {
-            driver = new FirefoxDriver("/home/garanin/newsrvapp/driver/");
+            // driver = new FirefoxDriver("/home/garanin/newsrvapp/driver/");
+            var capabilities = new DesiredCapabilities();
+            capabilities.SetCapability(CapabilityType.BrowserName, "chrome");
+            capabilities.SetCapability(CapabilityType.BrowserVersion, "91.0");
+            driver = new RemoteWebDriver(new Uri("http://192.168.168.15:4444/wd/hub"), capabilities);
+
         }
 
         [Test]
         public void Test1()
         {
-            driver.Url = "http://localhost:5000";
+            driver.Url = "http://192.168.168.4:5000";
             
             Thread.Sleep(1000);
 
